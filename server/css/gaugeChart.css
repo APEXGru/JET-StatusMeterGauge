@@ -1,0 +1,18 @@
+.a-JET-gauge rect{
+	cursor : auto;
+}
+
+.a-JET-gauge.Horizontal {
+    margin-top   : 8px;
+}
+
+.a-JET-gauge.Horizontal a {
+    display : table-cell;
+}
+
+.a-JET-gauge.t-BadgeList .t-BadgeList-label.t-BadgeList-label--bottom  {
+    position : relative;
+    padding-left : 0px;
+    padding-right : 0px;
+}
+ 
