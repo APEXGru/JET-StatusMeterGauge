@@ -4,6 +4,7 @@ Region Plugin to show one or more Status Meter Gauges based on a SQL statement.
 
 ## Changelog
 
+#### 1.1.0 - Added a "Tooltip" column
 #### 1.0.0 - Initial Release
 
 
@@ -20,6 +21,7 @@ Available Plugin Settings :
 - **Percent column** - the name or alias of the column that should be used as the percent value (can be the same as the Value Column)(required)
 - **Label column** - the name or alias of the column that should be used as the label (optional)
 - **Color column** - the name or alias of the column that should be used as the color column (optional)
+- **Tooltip column** - the name or alias of the column that should be used as the tooltip column (optional)
 - **Link target** - standard APEX link target option (optional)
 - **Orientation** - should the gauges be horizontally or verticaly rendered (required)
 - **Height** - the height of the gauge (can be restricted by the available height for the region) (required)
@@ -28,7 +30,7 @@ Available Plugin Settings :
 
 ## How to use
 - Create a new Region based on the Plugin
-- Add a SQL Statement like the example below. Then map the columns to the correct aatributes.
+- Add a SQL Statement like the example below. Then map the columns to the correct attributes.
 ```
 select round(dbms_random.value(0,100))     val
 ,      dbms_random.string('l', 10)  txt
