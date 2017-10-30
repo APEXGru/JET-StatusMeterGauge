@@ -28,7 +28,7 @@ end;
 prompt --application/shared_components/plugins/region_type/com_apexconsulting_apex_jet_gauge
 begin
 wwv_flow_api.create_plugin(
- p_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31236202388909732983)
 ,p_plugin_type=>'REGION TYPE'
 ,p_name=>'COM.APEXCONSULTING.APEX.JET.GAUGE'
 ,p_display_name=>'JET Status Meter Gauge'
@@ -97,19 +97,22 @@ wwv_flow_api.create_plugin(
 '  c_percent_label_column constant varchar2(255) := p_region.attribute_02;',
 '  c_label_label_column   constant varchar2(255) := p_region.attribute_03;',
 '  c_color_label_column   constant varchar2(255) := p_region.attribute_04;',
+'  c_tooltip_label_column constant varchar2(255) := p_region.attribute_09;',
 '  c_url                  constant varchar2(255) := p_region.attribute_05;',
 '',
 '  l_value_column_no      pls_integer;',
 '  l_percent_column_no    pls_integer;',
 '  l_label_column_no      pls_integer;',
 '  l_color_column_no      pls_integer;',
+'  l_tooltip_column_no    pls_integer;',
 '',
 '  l_value                number;',
 '  l_percent              number;',
 '  l_label                varchar2(100);',
 '  l_color                varchar2(100);',
 '  l_url                  varchar2(4000);',
-'  ',
+'  l_tooltip              varchar2(4000);',
+'',
 '  l_column_value_list      apex_plugin_util.t_column_value_list2;',
 '',
 'begin  ',
@@ -154,15 +157,13 @@ wwv_flow_api.create_plugin(
 '    p_is_required       => false,',
 '    p_data_type         => apex_plugin_util.c_data_type_varchar2',
 '  );',
-'/*',
-'  l_url_column_no := apex_plugin_util.get_column_no (',
-'    p_attribute_label   => ''URL'',',
-'    p_column_alias      => c_url_label_column,',
+'  l_tooltip_column_no := apex_plugin_util.get_column_no (',
+'    p_attribute_label   => ''Tooltip'',',
+'    p_column_alias      => c_tooltip_label_column,',
 '    p_column_value_list => l_column_value_list,',
 '    p_is_required       => false,',
 '    p_data_type         => apex_plugin_util.c_data_type_varchar2',
 '  );',
-'*/',
 '',
 '  -- begin output as json',
 '  owa_util.mime_header(''application/json'', false);',
@@ -214,6 +215,14 @@ wwv_flow_api.create_plugin(
 '      apex_json.write( ''color'', l_color ); ',
 '    end if;',
 '',
+'    if l_tooltip_column_no is not null then',
+'      l_tooltip := apex_plugin_util.get_value_as_varchar2 (',
+'        p_data_type => l_column_value_list(l_tooltip_column_no).data_type,',
+'        p_value     => l_column_value_list(l_tooltip_column_no).value_list(l_row_num) ',
+'      );',
+'      apex_json.write( ''tooltip'', l_tooltip ); ',
+'    end if;',
+'',
 '    if c_url is not null then',
 '      l_url := apex_util.prepare_url (',
 '        apex_plugin_util.replace_substitutions (',
@@ -240,12 +249,12 @@ wwv_flow_api.create_plugin(
 ,p_standard_attributes=>'SOURCE_SQL:AJAX_ITEMS_TO_SUBMIT:ESCAPE_OUTPUT'
 ,p_substitute_attributes=>false
 ,p_subscribe_plugin_settings=>true
-,p_version_identifier=>'1.0.0'
-,p_files_version=>167
+,p_version_identifier=>'1.1.0'
+,p_files_version=>168
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(23779288376955485396)
-,p_plugin_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31183138922165822811)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>1
 ,p_display_sequence=>10
@@ -258,8 +267,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_help_text=>'Select the column from the region SQL Query that holds the shown value for the gauge.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(23779288944529489231)
-,p_plugin_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31183139489739826646)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>2
 ,p_display_sequence=>20
@@ -272,8 +281,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_help_text=>'Select the column from the region SQL Query that holds the percentage for the gauge.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(23779289580528493705)
-,p_plugin_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31183140125738831120)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>3
 ,p_display_sequence=>30
@@ -286,8 +295,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_help_text=>'Select the column from the region SQL Query that holds the label value for the gauge.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(23779290241485496270)
-,p_plugin_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31183140786695833685)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>4
 ,p_display_sequence=>40
@@ -300,8 +309,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_help_text=>'Select the column from the region SQL Query that holds the color for the gauge.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(23779290906921502044)
-,p_plugin_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31183141452131839459)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>5
 ,p_display_sequence=>50
@@ -313,8 +322,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_help_text=>'Enter a target page to be called when the user clicks a gauge.'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(23779563796917677713)
-,p_plugin_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31183414342128015128)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>6
 ,p_display_sequence=>60
@@ -327,22 +336,22 @@ wwv_flow_api.create_plugin_attribute(
 ,p_lov_type=>'STATIC'
 );
 wwv_flow_api.create_plugin_attr_value(
- p_id=>wwv_flow_api.id(23779565014089678411)
-,p_plugin_attribute_id=>wwv_flow_api.id(23779563796917677713)
+ p_id=>wwv_flow_api.id(31183415559300015826)
+,p_plugin_attribute_id=>wwv_flow_api.id(31183414342128015128)
 ,p_display_sequence=>10
 ,p_display_value=>'Horizontal'
 ,p_return_value=>'Horizontal'
 );
 wwv_flow_api.create_plugin_attr_value(
- p_id=>wwv_flow_api.id(23779565331010679218)
-,p_plugin_attribute_id=>wwv_flow_api.id(23779563796917677713)
+ p_id=>wwv_flow_api.id(31183415876221016633)
+,p_plugin_attribute_id=>wwv_flow_api.id(31183414342128015128)
 ,p_display_sequence=>20
 ,p_display_value=>'Vertical'
 ,p_return_value=>'Vertical'
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(23779659483337134098)
-,p_plugin_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31183510028547471513)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>7
 ,p_display_sequence=>70
@@ -357,8 +366,8 @@ wwv_flow_api.create_plugin_attribute(
 ,p_is_translatable=>false
 );
 wwv_flow_api.create_plugin_attribute(
- p_id=>wwv_flow_api.id(23760376566064122459)
-,p_plugin_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31164227111274459874)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
 ,p_attribute_scope=>'COMPONENT'
 ,p_attribute_sequence=>8
 ,p_display_sequence=>80
@@ -376,9 +385,23 @@ wwv_flow_api.create_plugin_attribute(
 'Enter the interval between chart updates. Very small update intervals, such as 2 seconds, are discouraged since they may cause serious database performance issues.',
 'Leave empty for no automatic refresh.'))
 );
+wwv_flow_api.create_plugin_attribute(
+ p_id=>wwv_flow_api.id(31164902226925396259)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
+,p_attribute_scope=>'COMPONENT'
+,p_attribute_sequence=>9
+,p_display_sequence=>35
+,p_prompt=>'Tooltip'
+,p_attribute_type=>'REGION SOURCE COLUMN'
+,p_is_required=>false
+,p_column_data_types=>'VARCHAR2'
+,p_supported_ui_types=>'DESKTOP:JQM_SMARTPHONE'
+,p_is_translatable=>false
+,p_help_text=>'The column that contains the tooltip value.'
+);
 wwv_flow_api.create_plugin_std_attribute(
- p_id=>wwv_flow_api.id(23779249477406038544)
-,p_plugin_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31183100022616375959)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
 ,p_name=>'SOURCE_SQL'
 ,p_sql_min_column_count=>1
 ,p_examples=>wwv_flow_string.join(wwv_flow_t_varchar2(
@@ -428,22 +451,24 @@ wwv_flow_api.g_varchar2_table(25) := '72657222203A2066756E6374696F6E282064617461
 wwv_flow_api.g_varchar2_table(26) := '202020202020202020202020202020202076617220746F6F6C746970203D20646F63756D656E742E637265617465456C656D656E74282264697622293B0A2020202020202020202020202020202020202020202020202020202020202020202020202020';
 wwv_flow_api.g_varchar2_table(27) := '20202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202076617220746F6F6C74697054657874203D20646F63756D656E742E637265617465456C656D656E7428227370616E22293B0A2020';
 wwv_flow_api.g_varchar2_table(28) := '202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020746F6F6C746970546578742E74657874';
-wwv_flow_api.g_varchar2_table(29) := '436F6E74656E74203D206974656D2E6C6162656C2E74657874202B2022203A2022202B206974656D2E6D65747269634C6162656C2E746578743B0A2020202020202020202020202020202020202020202020202020202020202020202020202020202020';
-wwv_flow_api.g_varchar2_table(30) := '20202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020746F6F6C7469702E617070656E644368696C642820746F6F6C7469705465787420293B0A202020202020202020';
-wwv_flow_api.g_varchar2_table(31) := '20202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202072657475726E20746F6F6C7469';
-wwv_flow_api.g_varchar2_table(32) := '703B0A20202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020207D0A';
-wwv_flow_api.g_varchar2_table(33) := '2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020207D0A2020202020202020202020202020';
-wwv_flow_api.g_varchar2_table(34) := '202020202020202020202020202020202020202020202020202020202020202020202020202020207D293B0A202020202020202020202020202020202020202020202020202020207D293B0A20202020202020202020202020202020202020207D0A2020';
-wwv_flow_api.g_varchar2_table(35) := '20202020202020202020202020207D293B0A2020202020202020202020207D293B0A20202020202020207D2C0A2020202020202020726566726573683A2066756E6374696F6E202870526567696F6E49642C20704865696768742C20704F7269656E7461';
-wwv_flow_api.g_varchar2_table(36) := '74696F6E2C207041706578416A61784964656E74696669657229207B0A202020202020202020202020696E69742870526567696F6E49642C20704865696768742C20704F7269656E746174696F6E2C207041706578416A61784964656E74696669657229';
-wwv_flow_api.g_varchar2_table(37) := '3B0A20202020202020207D0A202020207D0A7D2877696E646F772E6A6574203D2077696E646F772E6A6574207C7C207B7D2C20617065782E6A51756572792C20617065782E7365727665722C20617065782E7574696C2C20617065782E6465627567293B';
+wwv_flow_api.g_varchar2_table(29) := '436F6E74656E74203D200A2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202069';
+wwv_flow_api.g_varchar2_table(30) := '74656D2E746F6F6C746970207C7C206974656D2E6C6162656C2E74657874202B2022203A2022202B206974656D2E6D65747269634C6162656C2E746578743B0A202020202020202020202020202020202020202020202020202020202020202020202020';
+wwv_flow_api.g_varchar2_table(31) := '202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020746F6F6C7469702E617070656E644368696C642820746F6F6C7469705465787420293B0A20202020';
+wwv_flow_api.g_varchar2_table(32) := '202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202072657475726E2074';
+wwv_flow_api.g_varchar2_table(33) := '6F6F6C7469703B0A2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020';
+wwv_flow_api.g_varchar2_table(34) := '2020207D0A2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020202020207D0A202020202020202020';
+wwv_flow_api.g_varchar2_table(35) := '2020202020202020202020202020202020202020202020202020202020202020202020202020202020202020207D293B0A202020202020202020202020202020202020202020202020202020207D293B0A20202020202020202020202020202020202020';
+wwv_flow_api.g_varchar2_table(36) := '207D0A202020202020202020202020202020207D293B0A2020202020202020202020207D293B0A20202020202020207D2C0A2020202020202020726566726573683A2066756E6374696F6E202870526567696F6E49642C20704865696768742C20704F72';
+wwv_flow_api.g_varchar2_table(37) := '69656E746174696F6E2C207041706578416A61784964656E74696669657229207B0A202020202020202020202020696E69742870526567696F6E49642C20704865696768742C20704F7269656E746174696F6E2C207041706578416A61784964656E7469';
+wwv_flow_api.g_varchar2_table(38) := '66696572293B0A20202020202020207D0A202020207D0A7D2877696E646F772E6A6574203D2077696E646F772E6A6574207C7C207B7D2C20617065782E6A51756572792C20617065782E7365727665722C20617065782E7574696C2C20617065782E6465';
+wwv_flow_api.g_varchar2_table(39) := '627567293B';
 null;
 end;
 /
 begin
 wwv_flow_api.create_plugin_file(
- p_id=>wwv_flow_api.id(23779091586141221875)
-,p_plugin_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31182942131351559290)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
 ,p_file_name=>'gaugeChart.js'
 ,p_mime_type=>'application/javascript'
 ,p_file_charset=>'utf-8'
@@ -462,8 +487,8 @@ end;
 /
 begin
 wwv_flow_api.create_plugin_file(
- p_id=>wwv_flow_api.id(23779569486601743308)
-,p_plugin_id=>wwv_flow_api.id(23832351843699395568)
+ p_id=>wwv_flow_api.id(31183420031812080723)
+,p_plugin_id=>wwv_flow_api.id(31236202388909732983)
 ,p_file_name=>'gaugeChart.css'
 ,p_mime_type=>'text/css'
 ,p_file_charset=>'utf-8'

@@ -32,7 +32,8 @@
                                                          "tooltip"               : { "renderer" : function( dataContext){
                                                                                       var tooltip = document.createElement("div");
                                                                                       var tooltipText = document.createElement("span");
-                                                                                      tooltipText.textContent = item.label.text + " : " + item.metricLabel.text;
+                                                                                      tooltipText.textContent = 
+                                                                                        item.tooltip || item.label.text + " : " + item.metricLabel.text;
                                                                                                 tooltip.appendChild( tooltipText );
                                                                                                 return tooltip;
                                                                                                }
