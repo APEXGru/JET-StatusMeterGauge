@@ -25,10 +25,8 @@
                                                          "animationOnDisplay"    : "auto",
                                                          "animationOnDataChange" : "auto",
                                                          "value"                 : item.value,
-                                                         "metricLabel"           : { "text" : item.metricLabel.text },
-                                                         "label"                 : { "text" : item.label.text },
-                                                         "title"                 : { "text" : " " },
                                                          "color"                 : item.color,
+                                                         "class"                 : "a-JET-statusMeterGauge",
                                                          "tooltip"               : { "renderer" : function( dataContext){
                                                                                       var tooltip = document.createElement("div");
                                                                                       var tooltipText = document.createElement("span");

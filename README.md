@@ -4,6 +4,7 @@ Region Plugin to show one or more Status Meter Gauges based on a SQL statement.
 
 ## Changelog
 
+#### 1.2.0 - Fix for APEX 18.1 / JET 4.2
 #### 1.1.0 - Added a "Tooltip" column
 #### 1.0.0 - Initial Release
 
