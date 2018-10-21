@@ -1,6 +1,6 @@
 {
   "name" : "JET StatusMeterGauge",
-  "version" : "1.2.0",
+  "version" : "1.2.1",
   "description" : "Region Plugin to show one or more Status Meter Gauges based on a SQL statement.",
   "keywords" : ["JET","chart"],
   "homepage" : "https://github.com/APEXGru/JET-StatusMeterGauge",
