@@ -6,19 +6,42 @@ whenever sqlerror exit sql.sqlcode rollback
 -- ORACLE Application Express (APEX) export file
 --
 -- You should run the script connected to SQL*Plus as the Oracle user
--- APEX_180200 or as the owner (parsing schema) of the application.
+-- APEX_200100 or as the owner (parsing schema) of the application.
 --
 -- NOTE: Calls to apex_application_install override the defaults below.
 --
 --------------------------------------------------------------------------------
 begin
 wwv_flow_api.import_begin (
- p_version_yyyy_mm_dd=>'2018.05.24'
-,p_release=>'18.2.0.00.12'
+ p_version_yyyy_mm_dd=>'2020.03.31'
+,p_release=>'20.1.0.00.13'
 ,p_default_workspace_id=>17760818290854663
 ,p_default_application_id=>84207
+,p_default_id_offset=>23740445394657185120
 ,p_default_owner=>'ROEL'
 );
+end;
+/
+ 
+prompt APPLICATION 84207 - APEX & JET
+--
+-- Application Export:
+--   Application:     84207
+--   Name:            APEX & JET
+--   Date and Time:   08:30 Friday August 21, 2020
+--   Exported By:     ROEL
+--   Flashback:       0
+--   Export Type:     Component Export
+--   Manifest
+--     PLUGIN: 5230230853435403177
+--   Manifest End
+--   Version:         20.1.0.00.13
+--   Instance ID:     63113759365424
+--
+
+begin
+  -- replace components
+  wwv_flow_api.g_mode := 'REPLACE';
 end;
 /
 prompt --application/shared_components/plugins/region_type/com_apexconsulting_apex_jet_gauge
@@ -31,7 +54,7 @@ wwv_flow_api.create_plugin(
 ,p_supported_ui_types=>'DESKTOP:JQM_SMARTPHONE'
 ,p_javascript_file_urls=>'[require jet]#PLUGIN_FILES#gaugeChart.js'
 ,p_css_file_urls=>wwv_flow_string.join(wwv_flow_t_varchar2(
-'#IMAGE_PREFIX#libraries/oraclejet/4.2.0/css/libs/oj/v4.2.0/alta/oj-alta-min.css',
+'#JET_CSS_DIRECTORY#alta/oj-alta-min.css',
 '#PLUGIN_FILES#gaugeChart.css'))
 ,p_plsql_code=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '/*',
@@ -243,8 +266,8 @@ wwv_flow_api.create_plugin(
 ,p_standard_attributes=>'SOURCE_SQL:AJAX_ITEMS_TO_SUBMIT:ESCAPE_OUTPUT'
 ,p_substitute_attributes=>false
 ,p_subscribe_plugin_settings=>true
-,p_version_identifier=>'1.2.1'
-,p_files_version=>194
+,p_version_identifier=>'1.2.2'
+,p_files_version=>197
 );
 wwv_flow_api.create_plugin_attribute(
  p_id=>wwv_flow_api.id(5177167386691493005)
@@ -471,9 +494,10 @@ end;
 begin
 wwv_flow_api.g_varchar2_table := wwv_flow_api.empty_varchar2_table;
 wwv_flow_api.g_varchar2_table(1) := '2E612D4A45542D676175676520726563747B0D0A09637572736F72203A206175746F3B0D0A7D0D0A0D0A2E612D4A45542D67617567652E486F72697A6F6E74616C207B0D0A202020206D617267696E2D746F702020203A203870783B0D0A7D0D0A0D0A2E';
-wwv_flow_api.g_varchar2_table(2) := '612D4A45542D67617567652E486F72697A6F6E74616C2061207B0D0A20202020646973706C6179203A207461626C652D63656C6C3B0D0A7D0D0A0D0A2E612D4A45542D67617567652E742D42616467654C697374202E742D42616467654C6973742D6C61';
-wwv_flow_api.g_varchar2_table(3) := '62656C2E742D42616467654C6973742D6C6162656C2D2D626F74746F6D20207B0D0A20202020706F736974696F6E203A2072656C61746976653B0D0A2020202070616464696E672D6C656674203A203070783B0D0A2020202070616464696E672D726967';
-wwv_flow_api.g_varchar2_table(4) := '6874203A203070783B0D0A7D';
+wwv_flow_api.g_varchar2_table(2) := '612D4A45542D67617567652E486F72697A6F6E74616C2061207B0D0A20202020646973706C6179203A207461626C652D63656C6C3B0D0A7D0D0A0D0A2E742D42616467654C697374207B0D0A20202020646973706C61793A20696E697469616C3B0D0A7D';
+wwv_flow_api.g_varchar2_table(3) := '0D0A2E612D4A45542D67617567652E742D42616467654C6973742D2D63697263756C6172202E742D42616467654C6973742D6C6162656C207B0D0A20202020746578742D616C69676E3A2063656E7465723B0D0A7D0D0A0D0A2E612D4A45542D67617567';
+wwv_flow_api.g_varchar2_table(4) := '652E742D42616467654C697374202E742D42616467654C6973742D6C6162656C2E742D42616467654C6973742D6C6162656C2D2D626F74746F6D20207B0D0A20202020706F736974696F6E203A2072656C61746976653B0D0A2020202070616464696E67';
+wwv_flow_api.g_varchar2_table(5) := '2D6C656674203A203070783B0D0A2020202070616464696E672D7269676874203A203070783B0D0A7D';
 null;
 end;
 /
@@ -488,8 +512,9 @@ wwv_flow_api.create_plugin_file(
 );
 end;
 /
+prompt --application/end_environment
 begin
-wwv_flow_api.import_end(p_auto_install_sup_obj => nvl(wwv_flow_application_install.get_auto_install_sup_obj, false), p_is_component_import => true);
+wwv_flow_api.import_end(p_auto_install_sup_obj => nvl(wwv_flow_application_install.get_auto_install_sup_obj, false));
 commit;
 end;
 /
